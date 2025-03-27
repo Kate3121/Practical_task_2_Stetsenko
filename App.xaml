@@ -12,17 +12,16 @@
 			<GradientStop Color="WhiteSmoke" Offset="0.9" />
 			<GradientStop Color="Transparent" Offset="1" />
 		</GradientStopCollection>
-		<LinearGradientBrush x:Key="MyGlassBrushResource"
-StartPoint="0,0" EndPoint="1,1" Opacity="0.75"
-GradientStops="{StaticResource MyGlassGradientStopsResource}" />
+		<LinearGradientBrush x:Key="MyGlassBrushResource" StartPoint="0,0" EndPoint="1,1" Opacity="0.75" 
+							 GradientStops="{StaticResource MyGlassGradientStopsResource}" />
 		
-		<!-- Linear Gradient Brush for Button Background -->
+		<!-- градієнтна лінійна заливка для фону кнопки -->
 		<LinearGradientBrush x:Key="GrayBlueGradientBrush" StartPoint="0,0" EndPoint="1,0">
 			<GradientStop Color="DarkGreen" Offset="0" />
 			<GradientStop Color="#0af769" Offset="0.5" />
 			<GradientStop Color="DarkGreen" Offset="1" />
 		</LinearGradientBrush>
-		<!-- Button Style -->
+		<!-- Стиль книпки -->
 		<Style TargetType="{x:Type Button}">
 			<Setter Property="Background" Value="{StaticResource GrayBlueGradientBrush}" />
 			<Setter Property="Width" Value="100" />
@@ -30,25 +29,20 @@ GradientStops="{StaticResource MyGlassGradientStopsResource}" />
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type Button}">
-						<Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
-      ClipToBounds="True">
+						<Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="True">
 
-							<!-- Outer Rectangle with rounded corners. -->
-							<Rectangle x:Name="outerRectangle" HorizontalAlignment="Stretch"
-      VerticalAlignment="Stretch" Stroke="{TemplateBinding Background}"
-      RadiusX="20" RadiusY="20" StrokeThickness="5" Fill="Transparent" />
+							<!--Зовнішній прямокутник із закругленими кутами. -->
+							<Rectangle x:Name="outerRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+									   Stroke="{TemplateBinding Background}" RadiusX="20" RadiusY="20" StrokeThickness="5" Fill="Transparent" />
 
-							<!-- Inner Rectangle with rounded corners. -->
-							<Rectangle x:Name="innerRectangle" HorizontalAlignment="Stretch"
-      VerticalAlignment="Stretch" Stroke="Transparent" StrokeThickness="20"
-      Fill="{TemplateBinding Background}" RadiusX="20" RadiusY="20" />
+							<!-- Внутрішній прямокутник із закругленими кутами. -->
+							<Rectangle x:Name="innerRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="Transparent" 
+									   StrokeThickness="20" Fill="{TemplateBinding Background}" RadiusX="20" RadiusY="20" />
 
-							<!-- Glass Rectangle -->
-							<Rectangle x:Name="glassCube" HorizontalAlignment="Stretch"
-      VerticalAlignment="Stretch"
-      StrokeThickness="2" RadiusX="10" RadiusY="10" Opacity="0"
-      Fill="{StaticResource MyGlassBrushResource}"
-      RenderTransformOrigin="0.5,0.5">
+							<!-- Скляний прямокутник -->
+							<Rectangle x:Name="glassCube" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" StrokeThickness="2" 
+									   RadiusX="10" RadiusY="10" Opacity="0" Fill="{StaticResource MyGlassBrushResource}" 
+									   RenderTransformOrigin="0.5,0.5">
 								<Rectangle.Stroke>
 									<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
 										<LinearGradientBrush.GradientStops>
@@ -57,27 +51,39 @@ GradientStops="{StaticResource MyGlassGradientStopsResource}" />
 										</LinearGradientBrush.GradientStops>
 									</LinearGradientBrush>
 								</Rectangle.Stroke>
-								<!-- These transforms have no effect as they are declared here.
-      The reason the transforms are included is to be targets
-      for animation (see later). -->
+								<!--Ці трансформації не мають ефекту, оскільки вони тут оголошені. Причина, що перетворюється, включає цілі для анімації  -->
 								<Rectangle.RenderTransform>
 									<TransformGroup>
 										<ScaleTransform />
 										<RotateTransform />
 									</TransformGroup>
 								</Rectangle.RenderTransform>
-								<!-- A BevelBitmapEffect is applied to give the button a "Beveled" look. -->
+								<!-- A BevelBitmapEffect застосовується, щоб надати кнопці "скошений" вигляд. -->
 								<Rectangle.BitmapEffect>
 									<BevelBitmapEffect />
 								</Rectangle.BitmapEffect>
 							</Rectangle>
 
-							<!-- Present Text of the button. -->
 							<DockPanel Name="myContentPresenterDockPanel">
-								<ContentPresenter x:Name="myContentPresenter" Margin="20"
-        Content="{TemplateBinding  Content}" TextBlock.Foreground="Black" />
+								<ContentPresenter x:Name="myContentPresenter" Margin="20" Content="{TemplateBinding  Content}" TextBlock.Foreground="Black" />
 							</DockPanel>
 						</Grid>
+						<ControlTemplate.Triggers>
+							<!-- Встановіть властивості, коли вказівник миші знаходиться над кнопкою. -->
+							<Trigger Property="IsMouseOver" Value="True">
+								<!-- Нижче наведено три параметри властивості, які виникають, коли виконується умова (користувач наводить курсор миші на кнопку).  -->
+								<!-- Змінити колір зовнішнього прямокутника, коли користувач наводить на нього мишу. -->
+								<Setter Property ="Rectangle.Stroke" TargetName="outerRectangle" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+								<!-- Встановлює непрозорість скла на 1, тому скло «з’являється», коли користувач наводить на нього мишу. -->
+								<Setter Property="Rectangle.Opacity" Value="1" TargetName="glassCube" />
+								<!-- Робить текст трохи розмитим, ніби ви дивитеся на нього крізь розмите скло. -->
+								<Setter Property="ContentPresenter.BitmapEffect" TargetName="myContentPresenter">
+									<Setter.Value>
+										<BlurBitmapEffect Radius="1" />
+									</Setter.Value>
+								</Setter>
+							</Trigger>
+						</ControlTemplate.Triggers>
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
