@@ -83,6 +83,12 @@
 									</Setter.Value>
 								</Setter>
 							</Trigger>
+							<!-- Встановити властивості, коли кнопка має фокус. -->
+							<Trigger Property="IsFocused" Value="true">
+								<Setter Property="Rectangle.Opacity" Value="1" TargetName="glassCube" />
+								<Setter Property="Rectangle.Stroke" TargetName="outerRectangle" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+								<Setter Property="Rectangle.Opacity" Value="1" TargetName="glassCube" />
+							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
 				</Setter.Value>
