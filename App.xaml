@@ -109,6 +109,16 @@
 									<StopStoryboard BeginStoryboardName="mouseEnterBeginStoryboard" />
 								</EventTrigger.Actions>
 							</EventTrigger>
+							<!--  Анімація запускається, коли натискається кнопка, спричиняючи обертання скла. -->
+							<EventTrigger RoutedEvent="Button.Click">
+								<EventTrigger.Actions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetName="glassCube" Storyboard.TargetProperty="(Rectangle.RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)" By="360" Duration="0:0:0.5" />
+										</Storyboard>
+									</BeginStoryboard>
+								</EventTrigger.Actions>
+							</EventTrigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
 				</Setter.Value>
