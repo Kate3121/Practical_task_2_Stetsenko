@@ -89,6 +89,26 @@
 								<Setter Property="Rectangle.Stroke" TargetName="outerRectangle" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
 								<Setter Property="Rectangle.Opacity" Value="1" TargetName="glassCube" />
 							</Trigger>
+
+							<!--  Анімація, яка починається, коли миша входить і залишає кнопку. -->
+							<EventTrigger RoutedEvent="Mouse.MouseEnter">
+								<EventTrigger.Actions>
+									<BeginStoryboard Name="mouseEnterBeginStoryboard">
+										<Storyboard>
+											<!-- Ця анімація змушує скляний прямокутник зменшуватися в напрямку X. -->
+											<DoubleAnimation Storyboard.TargetName="glassCube" Storyboard.TargetProperty= "(Rectangle.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" By="-0.1" Duration="0:0:0.5" />
+											<!-- Ця анімація змушує скляний прямокутник зменшуватися в напрямку Y. -->
+											<DoubleAnimation Storyboard.TargetName="glassCube" Storyboard.TargetProperty= "(Rectangle.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" By="-0.1" Duration="0:0:0.5" />
+										</Storyboard>
+									</BeginStoryboard>
+								</EventTrigger.Actions>
+							</EventTrigger>
+							<EventTrigger RoutedEvent="Mouse.MouseLeave">
+								<EventTrigger.Actions>
+									<!-- Зупинення розкадровки повертає всі властивості анімації до стандартних. -->
+									<StopStoryboard BeginStoryboardName="mouseEnterBeginStoryboard" />
+								</EventTrigger.Actions>
+							</EventTrigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
 				</Setter.Value>
